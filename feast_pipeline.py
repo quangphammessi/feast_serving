@@ -26,7 +26,7 @@ from urllib.parse import urlparse
 #   dsl-compile --py pipeline.py --output pipeline.tar.gz
 
 WORKSPACE = '/workspace'
-PROJECT_ROOT = os.path.join(WORKSPACE, 'tensorflow_lprnet_test')
+PROJECT_ROOT = os.path.join(WORKSPACE, 'feast_serving')
 CONDA_PYTHON_CMD = '/opt/conda/envs/kubeflow-lpr/bin/python'
 
 
@@ -59,7 +59,7 @@ def fetch_feast_feature(image: str, pvolume: PipelineVolume):
     op = dsl.ContainerOp(
         name='feature_store',
         image=image,
-        command=f'python {PROJECT_ROOT}/create_feature_store.py',
+        command=f'{CONDA_PYTHON_CMD} {PROJECT_ROOT}/create_feature_store.py',
         container_kwargs={'image_pull_policy': 'IfNotPresent'},
         pvolumes={"/workspace": pvolume}
     )
@@ -69,9 +69,14 @@ def fetch_feast_feature(image: str, pvolume: PipelineVolume):
     name='Feast Image Pipeline',
     description='Feast Image Pipeline to be executed on KubeFlow.'
 )
-def training_pipeline(image: str='quangphammessi/tensorflow_lprnet',
-                        repo_url: str='https://github.com/quangphammessi/tensorflow_lprnet_test',
+def training_pipeline(image: str='quangphammessi/feast_serving:latest',
+                        repo_url: str='https://github.com/quangphammessi/feast_serving',
                         data_dir: str='/workspace'):
     git_clone = git_clone_op(repo_url=repo_url)
 
     fetch_feast = fetch_feast_feature(image=image, pvolume=git_clone.pvolume)
+
+if __name__ == '__main__':
+    import kfp.compiler as compiler
+
+    compiler.Compiler().compile(training_pipeline, __file__ + '.tar.gz')
