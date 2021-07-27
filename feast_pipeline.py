@@ -59,9 +59,9 @@ def fetch_feast_feature(image: str, pvolume: PipelineVolume):
     op = dsl.ContainerOp(
         name='feature_store',
         image=image,
-        command=f'{CONDA_PYTHON_CMD} {PROJECT_ROOT}/create_feature_store.py',
+        command=[CONDA_PYTHON_CMD, f'{PROJECT_ROOT}/create_feature_store.py'],
         container_kwargs={'image_pull_policy': 'IfNotPresent'},
-        pvolumes={"/workspace": pvolume}
+        pvolumes={WORKSPACE: pvolume}
     )
 
 

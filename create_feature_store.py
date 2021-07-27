@@ -22,7 +22,7 @@ from urllib.parse import urlparse
 #   dsl-compile --py pipeline.py --output pipeline.tar.gz
 
 WORKSPACE = '/workspace'
-PROJECT_ROOT = os.path.join(WORKSPACE, 'tensorflow_lprnet_test')
+PROJECT_ROOT = os.path.join(WORKSPACE, 'feast_serving')
 CONDA_PYTHON_CMD = '/opt/conda/envs/kubeflow-lpr/bin/python'
 
 class feature_store_client:
