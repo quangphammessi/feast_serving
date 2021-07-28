@@ -55,21 +55,38 @@ def git_clone_op(repo_url: str):
 
     return op
 
-def fetch_feast_feature(image: str, pvolume: PipelineVolume):
+def serve_feast_feature(image: str, pvolume: PipelineVolume):
     commands = [
         'pip install --upgrade six',
         'pip install --upgrade grpcio',
         'pip install --upgrade protobuf',
-        f'{CONDA_PYTHON_CMD} {PROJECT_ROOT}/create_feature_store.py'
+        f'{CONDA_PYTHON_CMD} {PROJECT_ROOT}/feature_serving.py'
     ]
     op = dsl.ContainerOp(
-        name='feature_store',
+        name='serve_feature_store',
         image=image,
         command=['sh'],
         arguments=['-c', ' && '.join(commands)],
         container_kwargs={'image_pull_policy': 'IfNotPresent'},
         pvolumes={WORKSPACE: pvolume}
     )
+
+    return op
+
+def fetch_feast_feature(image: str, pvolume: PipelineVolume):
+    commands = [
+        f'{CONDA_PYTHON_CMD} {PROJECT_ROOT}/create_feature_store.py'
+    ]
+    op = dsl.ContainerOp(
+        name='fetch_feature_store',
+        image=image,
+        command=['sh'],
+        arguments=['-c', ' && '.join(commands)],
+        container_kwargs={'image_pull_policy': 'IfNotPresent'},
+        pvolumes={WORKSPACE: pvolume}
+    )
+
+    return op
 
 
 @dsl.pipeline(
@@ -81,7 +98,9 @@ def training_pipeline(image: str='quangphammessi/feast_serving:newenv',
                         data_dir: str='/workspace'):
     git_clone = git_clone_op(repo_url=repo_url)
 
-    fetch_feast = fetch_feast_feature(image=image, pvolume=git_clone.pvolume)
+    serve_feast = serve_feast_feature(image=image, pvolume=git_clone.pvolume)
+
+    fetch_feast = fetch_feast_feature(image=image, pvolume=serve_feast.pvolume)
 
 if __name__ == '__main__':
     import kfp.compiler as compiler
