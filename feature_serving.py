@@ -161,20 +161,20 @@ def create_feature_serving():
     staging_bucket = f'file://{cur_path}'
 
     environment = {
-    #               'FEAST_CORE_URL': 'feast-release-feast-core.default:6565',
-        'FEAST_CORE_URL': 'localhost:6565',
+                  'FEAST_CORE_URL': 'feast-release-feast-core.default:6565',
+        # 'FEAST_CORE_URL': 'localhost:6565',
     #               'FEAST_DATAPROC_CLUSTER_NAME': 'dataprocfeast',
     #               'FEAST_DATAPROC_PROJECT': '<BUCKET>',
     #               'FEAST_DATAPROC_REGION': 'us-east1',
                     'FEAST_STAGING_LOCATION': staging_bucket,
                     'FEAST_HISTORICAL_FEATURE_OUTPUT_FORMAT': 'parquet',
                     'FEAST_HISTORICAL_FEATURE_OUTPUT_LOCATION': f"{staging_bucket}historical" ,
-    #               'FEAST_HISTORICAL_SERVING_URL': 'feast-release-feast-serving.default:6566',
-        'FEAST_HISTORICAL_SERVING_URL': 'localhost:6566',
+                  'FEAST_HISTORICAL_SERVING_URL': 'feast-release-feast-serving.default:6566',
+        # 'FEAST_HISTORICAL_SERVING_URL': 'localhost:6566',
                     'FEAST_REDIS_HOST': '<REDIS_IP>',
                     'FEAST_REDIS_PORT': '6379',
-    #               'FEAST_SERVING_URL': 'feast-release-feast-serving.default:6566',
-        'FEAST_SERVING_URL': 'localhost:6566',
+                  'FEAST_SERVING_URL': 'feast-release-feast-serving.default:6566',
+        # 'FEAST_SERVING_URL': 'localhost:6566',
                     'FEAST_SPARK_HOME': '/usr/local/spark',
                     'FEAST_SPARK_LAUNCHER': 'standalone',
                     'FEAST_SPARK_STAGING_LOCATION': f'{staging_bucket}/spark_staging_location/',
@@ -254,3 +254,6 @@ def create_feature_serving():
     out_images['created'] = pd.to_datetime(datetime.now())
 
     client.ingest(image_value_feature, out_images)
+
+if __name__ == '__main__':
+    create_feature_serving()
