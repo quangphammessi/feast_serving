@@ -78,6 +78,21 @@ def fetch_feast_feature(image: str, pvolume: PipelineVolume):
         'pip install --upgrade six',
         'pip install --upgrade grpcio',
         'pip install --upgrade protobuf',
+        f'{CONDA_PYTHON_CMD} {PROJECT_ROOT}/feature_serving.py'
+    ]
+    op = dsl.ContainerOp(
+        name='serve_feature_store',
+        image=image,
+        command=['sh'],
+        arguments=['-c', ' && '.join(commands)],
+        container_kwargs={'image_pull_policy': 'IfNotPresent'},
+        pvolumes={WORKSPACE: pvolume}
+    )
+
+    return op
+
+def fetch_feast_feature(image: str, pvolume: PipelineVolume):
+    commands = [
         f'{CONDA_PYTHON_CMD} {PROJECT_ROOT}/create_feature_store.py'
     ]
     op = dsl.ContainerOp(
