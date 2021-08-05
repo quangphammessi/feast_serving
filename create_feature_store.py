@@ -44,7 +44,7 @@ class feature_store_client:
 #                          'FEAST_DATAPROC_REGION': 'us-east1',
                          'FEAST_STAGING_LOCATION': self.staging_bucket,
                          'FEAST_HISTORICAL_FEATURE_OUTPUT_FORMAT': 'parquet',
-                         'FEAST_HISTORICAL_FEATURE_OUTPUT_LOCATION': f"{self.staging_bucket}historical" ,
+                         'FEAST_HISTORICAL_FEATURE_OUTPUT_LOCATION': f"{self.staging_bucket}/historical_feature_output" ,
                          'FEAST_HISTORICAL_SERVING_URL': 'feast-release-feast-serving.default:6566',
                 # 'FEAST_HISTORICAL_SERVING_URL': 'localhost:6566',
                          'FEAST_REDIS_HOST': 'feast-release-redis-headless.default.svc',
@@ -75,7 +75,8 @@ def create_staging_bucket():
     return staging_bucket
 
 def create_all():
-    staging_bucket = create_staging_bucket()
+    # staging_bucket = create_staging_bucket()
+    staging_bucket = 'file:///home/jovyan/'
     set_env=feature_store_client('Dataproc',staging_bucket)
     set_env.feature_store_settings()
 
