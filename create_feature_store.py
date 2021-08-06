@@ -37,7 +37,7 @@ class feature_store_client:
         if self.env.lower()=="dataproc":
             # Using environmental variables
             environment = {
-                'FEAST_CORE_URL': 'feast-release-feast-core.default:6565',
+                'FEAST_CORE_URL': 'feast-release-feast-core.default.svc:6565',
                 # 'FEAST_CORE_URL': 'localhost:6565',
 #                          'FEAST_DATAPROC_CLUSTER_NAME': 'dataprocfeast',
 #                          'FEAST_DATAPROC_PROJECT': '<BUCKET>',
@@ -45,11 +45,11 @@ class feature_store_client:
                          'FEAST_STAGING_LOCATION': self.staging_bucket,
                          'FEAST_HISTORICAL_FEATURE_OUTPUT_FORMAT': 'parquet',
                          'FEAST_HISTORICAL_FEATURE_OUTPUT_LOCATION': f"{self.staging_bucket}/historical_feature_output" ,
-                         'FEAST_HISTORICAL_SERVING_URL': 'feast-release-feast-serving.default:6566',
+                         'FEAST_HISTORICAL_SERVING_URL': 'feast-release-feast-serving.default.svc:6566',
                 # 'FEAST_HISTORICAL_SERVING_URL': 'localhost:6566',
                          'FEAST_REDIS_HOST': 'feast-release-redis-headless.default.svc',
                          'FEAST_REDIS_PORT': '6379',
-                         'FEAST_SERVING_URL': 'feast-release-feast-serving.default:6566',
+                         'FEAST_SERVING_URL': 'feast-release-feast-serving.default.svc:6566',
                 # 'FEAST_SERVING_URL': 'localhost:6566',
                          'FEAST_SPARK_HOME': '/usr/local/spark',
                         #  'FEAST_SPARK_LAUNCHER': 'standalone',
