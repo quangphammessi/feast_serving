@@ -56,7 +56,7 @@ class feature_store_client:
                          'FEAST_SPARK_LAUNCHER': 'k8s',
                          'SPARK_K8S_NAMESPACE': 'kubeflow',
                          'FEAST_SPARK_STAGING_LOCATION': f'{self.staging_bucket}/spark_staging_location/',
-                         'FEAST_SPARK_STANDALONE_MASTER': 'local[*]',
+                        #  'FEAST_SPARK_STANDALONE_MASTER': 'local[*]',
                          'STAGING_BUCKET': 'self.staging_bucket',
                          'DEMO_KAFKA_BROKERS': 'feast-release-kafka-headless.default.svc'
                            
