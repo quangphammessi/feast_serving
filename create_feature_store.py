@@ -42,9 +42,9 @@ class feature_store_client:
 #                          'FEAST_DATAPROC_CLUSTER_NAME': 'dataprocfeast',
 #                          'FEAST_DATAPROC_PROJECT': '<BUCKET>',
 #                          'FEAST_DATAPROC_REGION': 'us-east1',
-                         'FEAST_STAGING_LOCATION': self.staging_bucket,
+                        #  'FEAST_STAGING_LOCATION': self.staging_bucket,
                          'FEAST_HISTORICAL_FEATURE_OUTPUT_FORMAT': 'parquet',
-                         'FEAST_HISTORICAL_FEATURE_OUTPUT_LOCATION': f"{self.staging_bucket}/historical_feature_output" ,
+                        #  'FEAST_HISTORICAL_FEATURE_OUTPUT_LOCATION': f"{self.staging_bucket}/historical_feature_output" ,
                          'FEAST_HISTORICAL_SERVING_URL': 'feast-release-feast-serving.default.svc:6566',
                 # 'FEAST_HISTORICAL_SERVING_URL': 'localhost:6566',
                          'FEAST_REDIS_HOST': 'feast-release-redis-headless.default.svc',
@@ -55,9 +55,9 @@ class feature_store_client:
                         #  'FEAST_SPARK_LAUNCHER': 'standalone',
                          'FEAST_SPARK_LAUNCHER': 'k8s',
                          'SPARK_K8S_NAMESPACE': 'kubeflow',
-                         'FEAST_SPARK_STAGING_LOCATION': f'{self.staging_bucket}/spark_staging_location/',
+                        #  'FEAST_SPARK_STAGING_LOCATION': f'{self.staging_bucket}/spark_staging_location/',
                         #  'FEAST_SPARK_STANDALONE_MASTER': 'local[*]',
-                         'STAGING_BUCKET': 'self.staging_bucket',
+                        #  'STAGING_BUCKET': f'{self.staging_bucket}',
                          'DEMO_KAFKA_BROKERS': 'feast-release-kafka-headless.default.svc'
                            
                           }              
