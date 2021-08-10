@@ -75,8 +75,8 @@ def create_staging_bucket():
     return staging_bucket
 
 def create_all():
-    # staging_bucket = create_staging_bucket()
-    staging_bucket = 'file:///home/jovyan/'
+    staging_bucket = create_staging_bucket()
+    # staging_bucket = 'file:///home/jovyan/'
     set_env=feature_store_client('Dataproc',staging_bucket)
     set_env.feature_store_settings()
 
